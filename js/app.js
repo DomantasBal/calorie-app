@@ -7,6 +7,9 @@ class CalorieTracker {
 
     this._displayCaloriesLimit();
     this._displayCaloriesTotal();
+    this._displayCaloriesConsumed();
+    this._displayCaloriesBurned();
+    this._displayCaloriesRemaining();
   }
 
   // Public
@@ -26,6 +29,9 @@ class CalorieTracker {
 
   _render() {
     this._displayCaloriesTotal();
+    this._displayCaloriesConsumed();
+    this._displayCaloriesBurned();
+    this._displayCaloriesRemaining();
   }
 
   _displayCaloriesTotal() {
@@ -36,6 +42,27 @@ class CalorieTracker {
   _displayCaloriesLimit() {
     const totalCalorieLimitEl = document.querySelector('#calories-limit');
     totalCalorieLimitEl.innerHTML = this._calorieLimit;
+  }
+
+  _displayCaloriesConsumed() {
+    const caloriesConsumedEl = document.querySelector('#calories-consumed');
+    const consumed = this._meals.reduce((total, meal) => total + meal.calories, 0);
+
+    caloriesConsumedEl.innerHTML = consumed;
+  }
+
+  _displayCaloriesBurned() {
+    const caloriesBurnedEl = document.querySelector('#calories-burned');
+    const burned = this._workouts.reduce((total, workout) => total + workout.calories, 0);
+
+    caloriesBurnedEl.innerHTML = burned;
+  }
+
+  _displayCaloriesRemaining() {
+    const caloriesRemainingEl = document.querySelector('#calories-remaining');
+
+    const remaining = this._calorieLimit - this._totalCalories;
+    caloriesRemainingEl.innerHTML = remaining;
   }
 }
 
@@ -57,8 +84,8 @@ class Workout {
 
 const tracker = new CalorieTracker();
 
-const breakfast = new Meal('breakfast', 300);
+const breakfast = new Meal('breakfast', 400);
 tracker.addMeal(breakfast);
 
-const run = new Workout('run', 200);
+const run = new Workout('run', 100);
 tracker.addWorkout(run);
